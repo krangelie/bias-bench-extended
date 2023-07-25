@@ -22,7 +22,7 @@ parser.add_argument(
     action="store",
     nargs="*",
     help="List of SEAT tests to run. Test files should be in `data_dir` and have "
-    "corresponding names with extension .jsonl.",
+         "corresponding names with extension .jsonl.",
 )
 parser.add_argument(
     "--n_samples",
@@ -30,7 +30,7 @@ parser.add_argument(
     type=int,
     default=100000,
     help="Number of permutation test samples used when estimating p-values "
-    "(exact test is used if there are fewer than this many permutations).",
+         "(exact test is used if there are fewer than this many permutations).",
 )
 parser.add_argument(
     "--parametric",
@@ -42,26 +42,38 @@ parser.add_argument(
     action="store",
     type=str,
     default="bert-base-uncased",
-    choices=["bert-base-uncased", "albert-base-v2", "roberta-base", "gpt2"],
+    choices=["bert-base-uncased", "albert-base-v2", "roberta-base",
+             "gpt2", "gpt2-medium", "gpt2-m-kelm", "luke-base",
+             "colake"],
     help="HuggingFace model name or path (e.g., bert-base-uncased). Checkpoint from which a "
-    "model is instantiated.",
+         "model is instantiated.",
 )
 parser.add_argument(
     "--model",
     action="store",
     type=str,
     default="BertModel",
-    choices=["BertModel", "AlbertModel", "RobertaModel", "GPT2Model"],
+    choices=["BertModel", "AlbertModel", "RobertaModel", "GPT2Model", "LukeModel", "ColakeModel"],
     help="Model to evalute (e.g., BertModel). Typically, these correspond to a HuggingFace "
-    "class.",
+         "class.",
 )
-
 
 if __name__ == "__main__":
     args = parser.parse_args()
 
+    if "kelm" in args.model_name_or_path:
+        model_name_or_path = "/media/angelie/Samsung_T5/KELM-GPT2/gpt2-medium/kelm_full"
+    elif "colake" in args.model_name_or_path:
+        model_name_or_path = "bias_bench/model/colake"
+    elif "luke" in args.model_name_or_path:
+        model_name_or_path = "studio-ousia/luke-base"
+    else:
+        model_name_or_path = args.model_name_or_path
+
+
     experiment_id = generate_experiment_id(
-        name="seat", model=args.model, model_name_or_path=args.model_name_or_path
+        name="seat", model=args.model,
+        model_name_or_path=args.model_name_or_path
     )
 
     print("Running SEAT benchmark:")
@@ -70,12 +82,17 @@ if __name__ == "__main__":
     print(f" - n_samples: {args.n_samples}")
     print(f" - parametric: {args.parametric}")
     print(f" - model: {args.model}")
-    print(f" - model_name_or_path: {args.model_name_or_path}")
+    print(f" - model_name_or_path: {model_name_or_path}")
 
     # Load model and tokenizer.
-    model = getattr(models, args.model)(args.model_name_or_path)
+    model = getattr(models, args.model)(model_name_or_path)
     model.eval()
-    tokenizer = transformers.AutoTokenizer.from_pretrained(args.model_name_or_path)
+    if "kelm" in args.model_name_or_path:
+        tokenizer = transformers.AutoTokenizer.from_pretrained("gpt2-medium")
+    elif "colake" in args.model_name_or_path:
+        tokenizer = transformers.AutoTokenizer.from_pretrained("roberta-base")
+    else:
+        tokenizer = transformers.AutoTokenizer.from_pretrained(args.model_name_or_path)
 
     runner = SEATRunner(
         experiment_id=experiment_id,

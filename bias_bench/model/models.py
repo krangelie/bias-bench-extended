@@ -1,3 +1,4 @@
+import os
 from functools import partial
 
 import torch
@@ -26,6 +27,17 @@ class GPT2Model:
     def __new__(self, model_name_or_path):
         return transformers.GPT2Model.from_pretrained(model_name_or_path)
 
+class LukeModel:
+    def __new__(self, model_name_or_path):
+        return transformers.LukeModel.from_pretrained(model_name_or_path)
+
+class ColakeModel:
+    def __new__(self, model_name_or_path):
+        config = transformers.RobertaConfig.from_pretrained('roberta-base', type_vocab_size=3)
+        model = transformers.RobertaModel(config=config)
+        states_dict = torch.load(os.path.join(model_name_or_path, "model.bin"))
+        model.load_state_dict(states_dict, strict=False)
+        return model
 
 class BertForMaskedLM:
     def __new__(self, model_name_or_path):
@@ -41,6 +53,17 @@ class RobertaForMaskedLM:
     def __new__(self, model_name_or_path):
         return transformers.RobertaForMaskedLM.from_pretrained(model_name_or_path)
 
+class LukeForMaskedLM:
+    def __new__(self, model_name_or_path):
+        return transformers.LukeForMaskedLM.from_pretrained(model_name_or_path)
+
+class ColakeForMaskedLM:
+    def __new__(self, model_name_or_path):
+        config = transformers.RobertaConfig.from_pretrained('roberta-base', type_vocab_size=3)
+        model = transformers.RobertaForMaskedLM(config=config)
+        states_dict = torch.load(os.path.join(model_name_or_path, "model.bin"))
+        model.load_state_dict(states_dict, strict=False)
+        return model
 
 class GPT2LMHeadModel:
     def __new__(self, model_name_or_path):
