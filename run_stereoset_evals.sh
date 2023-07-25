@@ -13,7 +13,7 @@ results/stereoset/stereoset_m-LukeForMaskedLM_c-luke-base.json \
 --output_file results/stereoset/results_stereoset_m-LukeForMaskedLM_c-luke-base.json
 
 python experiments/stereoset_evaluation.py --predictions_file \
-results/stereoset/stereoset_m-RobertaForMaskedLM_c-roberta-base.json\
+results/stereoset/stereoset_m-RobertaForMaskedLM_c-roberta-base.json \
 --output_file results/stereoset/results_stereoset_m-RobertaForMaskedLM_c-roberta-base.json
 
 python experiments/stereoset_evaluation.py --predictions_file \
