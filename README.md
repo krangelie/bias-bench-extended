@@ -9,6 +9,8 @@ This repository contains the official source code for [An Empirical Survey of th
 **New:** Added CoLake, Luke and custom tuned GPT2 model support. To run the CoLake experiments, 
 download the model weights [here](https://github.com/txsun1997/CoLAKE). - @krangelie
 
+Note: Luke works only with newer versions of the transformer library (I got it running with 4.25.0)
+
 -------
 
 ## Bias Bench Leaderboard
