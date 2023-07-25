@@ -94,7 +94,7 @@ if __name__ == "__main__":
     elif "colake" in args.model_name_or_path:
         tokenizer = transformers.AutoTokenizer.from_pretrained("roberta-base")
     else:
-        tokenizer = transformers.AutoTokenizer.from_pretrained(args.model_name_or_path)
+        tokenizer = transformers.AutoTokenizer.from_pretrained(model_name_or_path)
 
     runner = StereoSetRunner(
         intrasentence_model=model,
