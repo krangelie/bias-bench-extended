@@ -38,7 +38,8 @@ parser.add_argument(
     action="store",
     type=str,
     default="bert-base-uncased",
-    choices=["bert-base-uncased", "albert-base-v2", "roberta-base",
+    choices=["bert-base-uncased", "albert-base-v2",
+             "roberta-base", "roberta-b-kelm",
              "gpt2", "gpt2-medium", "gpt2-m-kelm",
              "luke-base", "colake"],
     help="HuggingFace model name or path (e.g., bert-base-uncased). Checkpoint from which a "
@@ -56,8 +57,11 @@ parser.add_argument(
 if __name__ == "__main__":
     args = parser.parse_args()
 
-    if "kelm" in args.model_name_or_path:
-        model_name_or_path = "/media/angelie/Samsung_T5/KELM-GPT2/gpt2-medium/kelm_full"
+    if "gpt2-m-kelm" in args.model_name_or_path:
+        model_name_or_path = ("/media/angelie/Samsung_T5/KELM-tuned-models/KELM-GPT2/gpt2-medium"
+                              "/kelm_full")
+    elif "roberta-b-kelm" in args.model_name_or_path:
+        model_name_or_path = "/media/angelie/Samsung_T5/KELM-tuned-models/KELM-RoBERTa/roberta-base"
     elif "colake" in args.model_name_or_path:
         model_name_or_path = "bias_bench/model/colake"
     elif "luke" in args.model_name_or_path:
@@ -81,8 +85,10 @@ if __name__ == "__main__":
     # Load model and tokenizer.
     model = getattr(models, args.model)(model_name_or_path)
     model.eval()
-    if "kelm" in args.model_name_or_path:
+    if "gpt2-m-kelm" in args.model_name_or_path:
         tokenizer = transformers.AutoTokenizer.from_pretrained("gpt2-medium")
+    elif "roberta-b-kelm" in args.model_name_or_path:
+        tokenizer = transformers.AutoTokenizer.from_pretrained("roberta-base")
     elif "colake" in args.model_name_or_path:
         tokenizer = transformers.AutoTokenizer.from_pretrained("roberta-base")
     else:
