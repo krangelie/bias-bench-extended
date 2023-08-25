@@ -6,8 +6,11 @@
 This repository contains the official source code for [An Empirical Survey of the Effectiveness of Debiasing Techniques for Pre-trained Language Models](https://arxiv.org/abs/2110.08527) presented at ACL 2022.
 
 -------
-**New:** Added CoLake, Luke and custom tuned GPT2 model support. To run the CoLake experiments, 
-download the model weights [here](https://github.com/txsun1997/CoLAKE). - @krangelie
+**New:** Added CoLake, Luke, KEPLER and custom tuned GPT2 and RoBERTa model support. 
+- CoLake model weights can be found [here](https://github.com/txsun1997/CoLAKE)
+- KEPLER model weights can be found [here] (https://github.com/THU-KEG/KEPLER) and must be 
+  converted as described in their README. 
+@krangelie
 
 Note: Luke works only with newer versions of the transformer library (I got it running with 4.25.0)
 
