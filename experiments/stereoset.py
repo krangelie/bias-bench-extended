@@ -70,8 +70,8 @@ parser.add_argument(
 if __name__ == "__main__":
     args = parser.parse_args()
 
-    if any(model_name in ["gpt2-m-kelm", "roberta-b-kelm", "colake", "kepler"]
-           for model_name in args.model_name_or_path):
+    if any(model_name in args.model_name_or_path
+           for model_name in ["gpt2-m-kelm", "roberta-b-kelm", "colake", "kepler"]):
         model_name_or_path = args.local_model_path
     elif "luke" in args.model_name_or_path:
         model_name_or_path = "studio-ousia/luke-base"
@@ -98,8 +98,8 @@ if __name__ == "__main__":
 
     if "gpt2-m-kelm" in args.model_name_or_path:
         tokenizer = transformers.AutoTokenizer.from_pretrained("gpt2-medium")
-    if any(model_name in ["roberta-b-kelm", "colake", "kepler"]
-           for model_name in args.model_name_or_path):
+    if any(model_name in args.model_name_or_path
+           for model_name in ["roberta-b-kelm", "colake", "kepler"]):
         tokenizer = transformers.AutoTokenizer.from_pretrained("roberta-base")
     else:
         tokenizer = transformers.AutoTokenizer.from_pretrained(model_name_or_path)
