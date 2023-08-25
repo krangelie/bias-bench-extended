@@ -9,7 +9,7 @@ This repository contains the official source code for [An Empirical Survey of th
 **New:** Added CoLake, Luke, KEPLER and custom tuned GPT2 and RoBERTa model support. 
 - CoLake model weights can be found [here](https://github.com/txsun1997/CoLAKE)
 - KEPLER model weights can be found [here] (https://github.com/THU-KEG/KEPLER) and must be 
-  converted as described in their README. 
+  converted as described in their README. Instantiate with RoBERTa architecture.
 @krangelie
 
 Note: Luke works only with newer versions of the transformer library (I got it running with 4.25.0)

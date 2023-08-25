@@ -39,7 +39,7 @@ parser.add_argument(
     type=str,
     default="bert-base-uncased",
     choices=["bert-base-uncased", "albert-base-v2",
-             "roberta-base", "roberta-b-kelm",
+             "roberta-base", "roberta-b-kelm", "kepler",
              "gpt2", "gpt2-medium", "gpt2-m-kelm", "luke-base",
              "colake"],
     help="HuggingFace model name or path (e.g., bert-base-uncased). Checkpoint from which a "
@@ -69,6 +69,8 @@ if __name__ == "__main__":
                               "/kelm_full")
     elif "roberta-b-kelm" in args.model_name_or_path:
         model_name_or_path = "/media/angelie/Samsung_T5/KELM-tuned-models/KELM-RoBERTa/roberta-base"
+    elif "kepler" in args.model_name_or_path:
+        model_name_or_path = "/media/angelie/Samsung_T5/KEPLER"
     elif "colake" in args.model_name_or_path:
         model_name_or_path = "bias_bench/model/colake"
     elif "luke" in args.model_name_or_path:
@@ -96,9 +98,8 @@ if __name__ == "__main__":
 
     if "gpt2-m-kelm" in args.model_name_or_path:
         tokenizer = transformers.AutoTokenizer.from_pretrained("gpt2-medium")
-    elif "roberta-b-kelm" in args.model_name_or_path:
-        tokenizer = transformers.AutoTokenizer.from_pretrained("roberta-base")
-    elif "colake" in args.model_name_or_path:
+    if any(model_name in ["roberta-b-kelm", "colake", "kepler"]
+           for model_name in args.model_name_or_path):
         tokenizer = transformers.AutoTokenizer.from_pretrained("roberta-base")
     else:
         tokenizer = transformers.AutoTokenizer.from_pretrained(model_name_or_path)
