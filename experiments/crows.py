@@ -46,6 +46,12 @@ parser.add_argument(
     "model is instantiated.",
 )
 parser.add_argument(
+    "--local_model_path",
+    action="store",
+    type=str,
+    help="Local path to checkpoint from which a model is instantiated.",
+)
+parser.add_argument(
     "--bias_type",
     action="store",
     default=None,
@@ -58,15 +64,9 @@ parser.add_argument(
 if __name__ == "__main__":
     args = parser.parse_args()
 
-    if "gpt2-m-kelm" in args.model_name_or_path:
-        model_name_or_path = ("/media/angelie/Samsung_T5/KELM-tuned-models/KELM-GPT2/gpt2-medium"
-                              "/kelm_full")
-    elif "roberta-b-kelm" in args.model_name_or_path:
-        model_name_or_path = "/media/angelie/Samsung_T5/KELM-tuned-models/KELM-RoBERTa/roberta-base"
-    elif "kepler" in args.model_name_or_path:
-        model_name_or_path = "/media/angelie/Samsung_T5/KEPLER"
-    elif "colake" in args.model_name_or_path:
-        model_name_or_path = "bias_bench/model/colake"
+    if any(model_name in ["gpt2-m-kelm", "roberta-b-kelm", "colake", "kepler"]
+           for model_name in args.model_name_or_path):
+        model_name_or_path = args.local_model_path
     elif "luke" in args.model_name_or_path:
         model_name_or_path = "studio-ousia/luke-base"
     else:
