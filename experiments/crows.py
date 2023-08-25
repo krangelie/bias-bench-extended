@@ -49,7 +49,8 @@ parser.add_argument(
     "--bias_type",
     action="store",
     default=None,
-    choices=["gender", "race", "religion", "all"],
+    choices=["all", "gender", "race", "religion", "socioeconomic", "disability", "nationality",
+             "physical-appearance", "sexual-orientation", "age"],
     help="Determines which CrowS-Pairs dataset split to evaluate against.",
 )
 
